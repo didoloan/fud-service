@@ -35,30 +35,6 @@ List of available routes:
 `PATCH /v1/users/:userId` - update user\
 `DELETE /v1/users/:userId` - delete user
 
-## Error Handling
-
-The app has a centralized error handling mechanism.
-
-Controllers should try to catch the errors and forward them to the error handling middleware (by calling `next(error)`). For convenience, you can also wrap the controller inside the catchAsync utility wrapper, which forwards the error.
-
-```javascript
-const catchAsync = require('../utils/catchAsync');
-
-const controller = catchAsync(async (req, res) => {
-  // this error will be forwarded to the error handling middleware
-  throw new Error('Something wrong happened');
-});
-```
-
-The error handling middleware sends an error response, which has the following format:
-
-```json
-{
-  "code": 404,
-  "message": "Not found"
-}
-```
-
 ## License
 
 [MIT](LICENSE)

@@ -24,3 +24,5 @@ const sendSMS = async(to, message) {
     
     return response;
 }
+
+export default sendSMS;

@@ -14,9 +14,9 @@ const sendSMS = async(to, message) {
     try {
         response = await client.messages
         .create({
-            body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+            body: message,
             from: '+15017122661',
-            to: '+15558675310'
+            to: to
         })    
     } catch (error) {
         return {error:'Error sending SMS'}

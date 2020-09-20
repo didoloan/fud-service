@@ -1,8 +1,5 @@
-import request from 'request'
+import https from 'https';
 
-const accountSid = 'AC66b231221b38ec6ddcaf1a29cdf4face';
-const authToken = 'your_auth_token';
-const client = require('twilio')(accountSid, authToken);
 
 /** function to send SMS
  * @param {string} to
@@ -10,19 +7,30 @@ const client = require('twilio')(accountSid, authToken);
  * @returns {Object}
  */
 const sendSMS = async(to, message) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "hostname": "connect.routee.net",
+        "port": 443,
+        "path": "/sms",
+        "method": "POST",
+        "headers": {
+          "Authorization": "Bearer 12dc9fe4-7df4-4786-8d7a-a46d307687f4",
+          "Content-Type": "application/json"
+        },
+        "processData": false,
+        "data": JSON.stringify({body:message,to:to,from:process.env.SMS_NAME})
+    }
+
     let response;
-    try {
-        response = await client.messages
-        .create({
-            body: message,
-            from: '+15017122661',
-            to: to
-        })    
-    } catch (error) {
-        return {error:'Error sending SMS'}
-    } 
-    
-    return response;
+
+    try{
+        response = await https.request(settings);
+    }catch(e){
+        return 'FAILED';
+    }
+    return 'SUCCESS';
+   
 }
 
 export default sendSMS;
